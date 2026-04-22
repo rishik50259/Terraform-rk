@@ -7,17 +7,24 @@
 # - Preventing local state file issues
 # ---------------------------------------------
 terraform {
+
+  required_version = ">= 1.5.0"
   backend "s3" {}
 }
+
 
 # ---------------------------------------------
 # AWS Provider configuration
 # Purpose: Defines which cloud provider Terraform will use
 # and in which region resources will be created
 # ---------------------------------------------
-provider "aws" {
-  region = var.region # Region is passed as a variable for flexibility (multi-env support)
-}
+required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+
 
 # ---------------------------------------------
 # VPC Module
@@ -28,11 +35,11 @@ provider "aws" {
 # - Availability Zones distribution
 # ---------------------------------------------
 module "vpc" {
-  source = "../../modules/vpc" # Path to reusable VPC module
+  source = "../../modules/vpc"   # Path to reusable VPC module
 
-  region   = var.region   # AWS region
-  vpc_cidr = var.vpc_cidr # CIDR block for VPC (e.g., 10.0.0.0/16)
-  azs      = var.azs      # List of availability zones for high availability
+  region    = var.region        # AWS region
+  vpc_cidr  = var.vpc_cidr      # CIDR block for VPC (e.g., 10.0.0.0/16)
+  azs       = var.azs           # List of availability zones for high availability
 }
 
 # ---------------------------------------------
@@ -45,7 +52,7 @@ module "vpc" {
 # - Networking integration with VPC
 # ---------------------------------------------
 module "eks" {
-  source = "../../modules/eks" # Path to reusable EKS module
+  source = "../../modules/eks"   # Path to reusable EKS module
 
   region          = var.region                 # AWS region
   cluster_name    = "dev-eks-cluster"          # Name of the EKS cluster

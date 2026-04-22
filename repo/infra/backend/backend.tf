@@ -23,8 +23,8 @@ terraform {
     # Helps organize state files per environment (e.g., dev, prod)
     # -----------------------------------------
     key = "dev/terraform.tfstate" # for dev env
-	#key = "stage/terraform.tfstate" # for stage env. Uncomment it when creating dev env
-	#key = "prod/terraform.tfstate" # for stage env. Uncomment it when creating prod env
+    #key = "stage/terraform.tfstate" # for stage env. Uncomment it when creating dev env
+    #key = "prod/terraform.tfstate" # for stage env. Uncomment it when creating prod env
 
     # -----------------------------------------
     # AWS Region for Backend
@@ -32,7 +32,7 @@ terraform {
     # Must match the actual region of the bucket
     # -----------------------------------------
     region = "ap-south-1"
-	
-	dynamodb_table = "terraform-locks"
+
+    dynamodb_table = "terraform-locks"
   }
 }

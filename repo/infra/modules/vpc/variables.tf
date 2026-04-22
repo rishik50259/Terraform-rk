@@ -29,6 +29,6 @@ variable "vpc_cidr" {
 # - Fault tolerance across multiple data centers
 # ---------------------------------------------
 variable "azs" {
-  type = list(string)   # Ensures input is a list of AZ names
+  type = list(string) # Ensures input is a list of AZ names
   # Example: ["ap-south-1a", "ap-south-1b"]
 }

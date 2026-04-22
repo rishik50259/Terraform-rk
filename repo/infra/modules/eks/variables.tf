@@ -28,5 +28,5 @@ variable "cluster_name" {
 # Ensures cluster is secure (not directly exposed to internet)
 # ---------------------------------------------
 variable "private_subnets" {
-  type = list(string)   # Ensures input is a list of subnet IDs
+  type = list(string) # Ensures input is a list of subnet IDs
 }

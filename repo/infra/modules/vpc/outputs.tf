@@ -18,7 +18,7 @@ output "vpc_id" {
 # - Any resource that should not be publicly accessible
 # ---------------------------------------------
 output "private_subnets" {
-  value = aws_subnet.private[*].id   # Splat expression to return all private subnet IDs
+  value = aws_subnet.private[*].id # Splat expression to return all private subnet IDs
 }
 
 # ---------------------------------------------
@@ -30,5 +30,5 @@ output "private_subnets" {
 # - NAT Gateway placement
 # ---------------------------------------------
 output "public_subnets" {
-  value = aws_subnet.public[*].id    # Splat expression to return all public subnet IDs
+  value = aws_subnet.public[*].id # Splat expression to return all public subnet IDs
 }

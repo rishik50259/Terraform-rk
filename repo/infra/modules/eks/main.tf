@@ -90,7 +90,7 @@ resource "aws_eks_cluster" "main" {
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
-    subnet_ids = var.private_subnets
+    subnet_ids              = var.private_subnets
     endpoint_private_access = true
     endpoint_public_access  = false
     # Cluster is deployed in private subnets for security
@@ -161,12 +161,12 @@ resource "aws_eks_node_group" "nodes" {
 
   # Auto Scaling configuration for worker nodes
   scaling_config {
-    desired_size = 2   # Number of nodes to run normally
-    max_size     = 3   # Maximum nodes during scaling
-    min_size     = 1   # Minimum nodes to keep running
+    desired_size = 2 # Number of nodes to run normally
+    max_size     = 3 # Maximum nodes during scaling
+    min_size     = 1 # Minimum nodes to keep running
   }
 
-  instance_types = ["t3.medium"]   # EC2 instance type for nodes
+  instance_types = ["t3.medium"] # EC2 instance type for nodes
 
   # Ensure required IAM policies are attached before node creation
   depends_on = [

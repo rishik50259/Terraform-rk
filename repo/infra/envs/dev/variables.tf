@@ -27,5 +27,5 @@ variable "vpc_cidr" {
 # Enables high availability and multi-AZ deployment
 # ---------------------------------------------
 variable "azs" {
-  type = list(string)   # Ensures input is a list of AZ names (e.g., ["ap-south-1a", "ap-south-1b"])
+  type = list(string) # Ensures input is a list of AZ names (e.g., ["ap-south-1a", "ap-south-1b"])
 }

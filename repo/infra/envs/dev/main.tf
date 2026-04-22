@@ -16,7 +16,7 @@ terraform {
 # and in which region resources will be created
 # ---------------------------------------------
 provider "aws" {
-  region = var.region   # Region is passed as a variable for flexibility (multi-env support)
+  region = var.region # Region is passed as a variable for flexibility (multi-env support)
 }
 
 # ---------------------------------------------
@@ -28,11 +28,11 @@ provider "aws" {
 # - Availability Zones distribution
 # ---------------------------------------------
 module "vpc" {
-  source = "../../modules/vpc"   # Path to reusable VPC module
+  source = "../../modules/vpc" # Path to reusable VPC module
 
-  region    = var.region        # AWS region
-  vpc_cidr  = var.vpc_cidr      # CIDR block for VPC (e.g., 10.0.0.0/16)
-  azs       = var.azs           # List of availability zones for high availability
+  region   = var.region   # AWS region
+  vpc_cidr = var.vpc_cidr # CIDR block for VPC (e.g., 10.0.0.0/16)
+  azs      = var.azs      # List of availability zones for high availability
 }
 
 # ---------------------------------------------
@@ -45,7 +45,7 @@ module "vpc" {
 # - Networking integration with VPC
 # ---------------------------------------------
 module "eks" {
-  source = "../../modules/eks"   # Path to reusable EKS module
+  source = "../../modules/eks" # Path to reusable EKS module
 
   region          = var.region                 # AWS region
   cluster_name    = "dev-eks-cluster"          # Name of the EKS cluster

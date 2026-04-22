@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'ENV', choices: ['dev', 'stage', 'prod'], description: 'Select environment')
+    }
+
+    environment {
+        AWS_REGION = 'ap-south-1'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/rishik50259/Terraform-rk.git'
+            }
+        }
+		
+		
+		stage('Bootstrap Backend') {
+			steps {
+					sh """
+					cd repo/bootstrap
+
+					terraform init
+					terraform apply -auto-approve
+					
+					"""
+				}
+		}
+
+        stage('Terraform Init') {
+            steps {
+                sh "cd repo/infra/envs/${params.ENV} && terraform init -backend-config=repo/infra/backend/${params.ENV}.conf"
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                sh "cd repo/infra/envs/${params.ENV} && terraform validate"
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                sh "cd repo/infra/envs/${params.ENV} && terraform plan -out=tfplan"
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                script {
+						if (params.ENV == 'prod') {
+							input message: "🚨 Approve PRODUCTION deployment?"
+						} else {
+						echo "Auto-approved for ${params.ENV}"
+						}
+					}
+			}
+		}
+
+        stage('Terraform Apply') {
+            steps {
+                sh "cd repo/infra/envs/${params.ENV} && terraform apply tfplan"
+            }
+        }
+    }
+}

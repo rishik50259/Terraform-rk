@@ -89,14 +89,45 @@ resource "aws_eks_cluster" "main" {
 
   vpc_config {
     subnet_ids = var.private_subnets
+    endpoint_private_access = true
+    endpoint_public_access  = false
     # Cluster is deployed in private subnets for security
   }
+
+  enabled_cluster_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
+
+  encryption_config {
+    provider {
+      key_arn = aws_kms_key.eks.arn
+    }
+
+    resources = ["secrets"]
+  }
+
 
   # Ensures IAM role policy is attached before cluster creation
   depends_on = [
     aws_iam_role_policy_attachment.eks_cluster_policy
   ]
 }
+
+resource "aws_kms_key" "eks" {
+  description             = "EKS Secrets Encryption Key"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+
+  tags = {
+    Name = "eks-secrets-encryption-key"
+  }
+}
+
+
 
 # ---------------------------
 # EKS NODE GROUP (Worker Nodes)

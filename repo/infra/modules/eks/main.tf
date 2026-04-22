@@ -33,6 +33,8 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
+data "aws_caller_identity" "current" {}
+
 # ---------------------------
 # IAM ROLE: NODE GROUP
 # ---------------------------

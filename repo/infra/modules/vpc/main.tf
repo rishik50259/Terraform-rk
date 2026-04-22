@@ -37,6 +37,9 @@ resource "aws_internet_gateway" "igw" {
 # - Load balancers
 # - Bastion hosts
 # ---------------------------------------------
+
+#checkov:skip=CKV_AWS_130: Public subnet intentionally requires public IP assignment for internet-facing resources
+
 resource "aws_subnet" "public" {
   count = 2                                  # Creates 2 public subnets
 

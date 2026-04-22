@@ -4,7 +4,10 @@
 # This allows flexibility to deploy the same code in different regions
 # Value is typically provided via tfvars or CLI
 # ---------------------------------------------
-variable "region" {}
+variable "region" {
+  type = string
+}
+
 
 # ---------------------------------------------
 # VPC CIDR Variable
@@ -12,7 +15,10 @@ variable "region" {}
 # Allows different environments (dev/prod) to use different CIDR blocks
 # Helps avoid IP conflicts across environments or peered networks
 # ---------------------------------------------
-variable "vpc_cidr" {}
+variable "vpc_cidr" {
+  type = string
+}
+
 
 # ---------------------------------------------
 # Availability Zones Variable
@@ -21,5 +27,5 @@ variable "vpc_cidr" {}
 # Enables high availability and multi-AZ deployment
 # ---------------------------------------------
 variable "azs" {
-  type = list(string) # Ensures input is a list of AZ names (e.g., ["ap-south-1a", "ap-south-1b"])
+  type = list(string)   # Ensures input is a list of AZ names (e.g., ["ap-south-1a", "ap-south-1b"])
 }
